@@ -1,0 +1,86 @@
+<html ng-app="plunker">
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <script data-require="angular.js@1.2.x" src="http://code.angularjs.org/1.2.4/angular.js" data-semver="1.2.4"></script>
+<script type="text/javascript" src ="menu.js">
+</script>
+</head>
+<body bgcolor="#339966">
+<h2>Restaurant Menu</h2>
+<form action="">
+<div ng:controller="CartForm">
+    <table class="table" bgcolor="#FF6699">
+        <tr>
+            
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Cost</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+        <tr class="info" ng:repeat="item in invoice.items">
+            <td>{{item.description}}</td>          
+            <td><input type="number" min="0" max="99" ng:model="item.qty" ng:required class="input-big" style="background-color:#FDF5D8; color:Black;" style="width: 300px;"></td>
+            <td><input type="number" ng:model="item.cost" ng:required class="input-big" style="background-color:#FDF5D8; color:Black;"readonly></td>
+            <td>{{item.qty * item.cost | currency}}</td>
+            </tr>
+            <tr>
+                <a href ng:click="add_Item($index)">OneEach TakeAway</a>
+        </tr>
+        <tr>
+            <td><a href ng:click="addItem()" class="btn btn-big">Add CustomItem</a></td>
+            <td></td>
+            <td><h4>Total Amount:</h4></td>
+            <td>{{total() | currency}}</td>
+        </tr>
+    </table >
+    <a class="btn btn-sm btn-info" name="but" value="generate" ng-click="invoice()" href="#bill" >Generate Invoice</a>
+    <h2>Order Summary</h2>
+    <table bgcolor="#666699" class="table table-bordered">
+        <tr>
+    <th>Dish Name : </th>
+    <th>Quantity</th>
+    <th>Cost</th>
+    <th>Total</th>
+    <th>Delete</th>
+</tr>
+        <tr class="success" ng:repeat="item in invoice.items" ng:if="item.qty > 0">
+    <td >{{item.description}}</td>
+    <td>{{item.qty | currency}}</td>
+    <td>{{item.cost | currency}}</td>
+<td>{{item.qty * item.cost | currency}}</td>
+  <td><input type="radio" min="0" max="99" ng:model="item.qty" ng:required class="input-big" style="background-color:#FDF5D8; color:Black;" style="width: 300px;"></td>
+</tr>
+<tr>
+<h2>Total Bill Due : {{total() | currency}}</h2></tr>
+</table>
+<br><br><br>
+</form>
+<div class="table-responsive">
+<div class="col-sm-12" style="background-color:lavenderblush;"><div id="bill" class="jumbotron"><p>Invoice</p><hr/>
+<p id="shopHeading">Welcome to South Park Restuarant </p>
+<p id ="billingTable">Invoice Number: 25</p>
+<hr/>
+<p id= "grandTotal"></p>
+<table bgcolor="#666699" class="table table-hover">
+        <tr>
+    <th>Dish Name : </th>
+    <th>Quantity</th>
+    <th>Cost</th>
+    <th>Total</th>
+</tr>
+        <tr class="danger" ng:repeat="item in invoice.items" ng:if="item.qty > 0">
+    <td >{{item.description}}</td>
+    <td>{{item.qty | currency}}</td>
+    <td>{{item.cost | currency}}</td>
+<td>{{item.qty * item.cost | currency}}</td>
+</tr>
+<td>
+<h2>Total Bill Due : {{total() | currency}}</h2></td>
+</table>
+<h3>Please Visit Us again <br> or Order Online @manojravi.com</h3>
+</div>
+</div>
+</div>
+</body>
+</html>
